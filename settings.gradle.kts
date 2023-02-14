@@ -18,4 +18,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "dulkirmod"
+rootProject.name = "dulkirmodV2"
