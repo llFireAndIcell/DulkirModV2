@@ -17,8 +17,6 @@ java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 }
 
-
-
 // Minecraft configuration:
 loom {
     log4jConfigs.from(file("log4j2.xml"))
@@ -95,7 +93,7 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType(Jar::class) {
-    archiveBaseName.set("dulkirmod")
+    archiveBaseName.set("dulkirmodV2")
     manifest.attributes.run {
         this["FMLCorePluginContainsFMLMod"] = "true"
         this["ForceLoadAsMod"] = "true"
@@ -106,15 +104,14 @@ tasks.withType(Jar::class) {
     }
 }
 
-
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
-    archiveClassifier.set("all")
+    archiveClassifier.set("")
     from(tasks.shadowJar)
     input.set(tasks.shadowJar.get().archiveFile)
 }
 
 tasks.shadowJar {
-    archiveClassifier.set("all-dev")
+    archiveClassifier.set("dev")
     configurations = listOf(shadowImpl)
     doLast {
         configurations.forEach {

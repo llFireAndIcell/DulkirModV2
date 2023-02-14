@@ -9,6 +9,8 @@ import dulkirmod.utils.ContainerNameUtil
 import dulkirmod.utils.TabListUtils
 import dulkirmod.utils.TextUtils
 import dulkirmod.utils.TitleUtils
+import dulkirmod.utils.Utils.getArea
+import gg.essential.universal.ChatColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -127,7 +129,7 @@ class DulkirMod {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
         const val MOD_VERSION = "1.1.9"
-        const val CHAT_PREFIX = "§f<§3DulkirMod§f>§r"
+        val CHAT_PREFIX = "${ChatColor.DARK_AQUA}[DulkirMod]"
 
         val mc: Minecraft = Minecraft.getMinecraft()
         var config = Config

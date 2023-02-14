@@ -61,7 +61,7 @@ fun brokenHypeNotif() {
     if (oldKill != kill && oldChampionXp == championXp && TabListUtils.area != "Private Island") {
         mc.thePlayer.playSound("random.anvil_land", 1f * Config.bestiaryNotifVol, 0f)
         val color = Utils.getColorString(Config.bestiaryNotifColor)
-        TitleUtils.drawStringForTime("${color}Hype Broken", 5000)
+        TitleUtils.drawStringForTime("${color}Hype Broken", Config.notifTimeMillis())
     }
     // update item regardless of whether it is bugged or not
     oldKill = kill

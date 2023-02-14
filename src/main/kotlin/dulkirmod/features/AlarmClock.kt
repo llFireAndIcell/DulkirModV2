@@ -19,7 +19,7 @@ fun alarmClock() {
         if (Config.notifyZombieVillager && l.contains("8:00pm") && (currTime - lastUpdate) > 15000) {
             lastUpdate = currTime
             val color = Utils.getColorString(Config.bestiaryNotifColor)
-            TitleUtils.drawStringForTime("${color}Zombie Villager", 5000)
+            DulkirMod.titleUtils.drawStringForTime("${color}Zombie Villager", Config.notifTimeMillis())
             if (Config.bestiaryAlertSounds)
                 mc.thePlayer.playSound("mob.villager.yes", 1f * Config.bestiaryNotifVol, 0f)
         }
@@ -27,7 +27,7 @@ fun alarmClock() {
         else if (Config.notifyGhast && l.contains("9:00pm") && (currTime - lastUpdate) > 15000) {
             lastUpdate = currTime
             val color = Utils.getColorString(Config.bestiaryNotifColor)
-            TitleUtils.drawStringForTime("${color}Ghast", 5000)
+            DulkirMod.titleUtils.drawStringForTime("${color}Ghast", Config.notifTimeMillis())
             if (Config.bestiaryAlertSounds)
                 mc.thePlayer.playSound("mob.ghast.scream", 1f * Config.bestiaryNotifVol, 1f)
         }

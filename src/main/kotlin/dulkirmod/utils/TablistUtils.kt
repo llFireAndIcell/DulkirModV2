@@ -17,18 +17,18 @@ object TabListUtils {
     var maxVisitors: Boolean = false
 
     private val playerInfoOrdering = object : Ordering<NetworkPlayerInfo>() {
-        override fun compare(p_compare_1_: NetworkPlayerInfo?, p_compare_2_: NetworkPlayerInfo?): Int {
-            val scorePlayerTeam = p_compare_1_?.playerTeam
-            val scorePlayerTeam1 = p_compare_2_?.playerTeam
-            if (p_compare_1_ != null) {
-                if (p_compare_2_ != null) {
+        override fun compare(o1: NetworkPlayerInfo?, o2: NetworkPlayerInfo?): Int {
+            val scorePlayerTeam = o1?.playerTeam
+            val scorePlayerTeam1 = o2?.playerTeam
+            if (o1 != null) {
+                if (o2 != null) {
                     return ComparisonChain.start().compareTrueFirst(
-                        p_compare_1_.gameType != WorldSettings.GameType.SPECTATOR,
-                        p_compare_2_.gameType != WorldSettings.GameType.SPECTATOR
+                        o1.gameType != WorldSettings.GameType.SPECTATOR,
+                        o2.gameType != WorldSettings.GameType.SPECTATOR
                     ).compare(
                         if (scorePlayerTeam != null) scorePlayerTeam.registeredName else "",
                         if (scorePlayerTeam1 != null) scorePlayerTeam1.registeredName else ""
-                    ).compare(p_compare_1_.gameProfile.name, p_compare_2_.gameProfile.name).result()
+                    ).compare(o1.gameProfile.name, o2.gameProfile.name).result()
                 }
                 return 0
             }

@@ -21,7 +21,7 @@ object TitleUtils {
         var scale = ((screenWidth - 100) * Config.bestiaryNotifSize) / width
         scale = min(scale, 10.0)
         GlStateManager.pushMatrix()
-        GlStateManager.translate((screenWidth / 2 - width * scale / 2), screenHeight / 2 - (4.5 * scale), 0.0)
+        GlStateManager.translate((screenWidth / 2 - width * scale / 2), screenHeight / 3 - (4.5 * scale), 0.0)
         GlStateManager.scale(scale, scale, scale)
         mc.fontRendererObj.drawString(curString, 0f, 0f, 0, Config.bestiaryTextShadow)
         GlStateManager.popMatrix()

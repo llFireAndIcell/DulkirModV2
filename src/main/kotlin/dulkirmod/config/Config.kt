@@ -489,6 +489,18 @@ object Config : Vigilant(File("./config/dulkirmod/config.toml"), "DulkirMod", so
     )
     var bestiaryNotifSize = .7f
 
+    @Property(
+        type = PropertyType.DECIMAL_SLIDER,
+        name = "Time",
+        description = "Time, in seconds, for notifications to display",
+        category = "Bestiary",
+        subcategory = "Notifications",
+        minF = 0.1f,
+        maxF = 5f,
+        decimalPlaces = 1
+    )
+    var bestiaryNotifTime = 2f
+    fun notifTimeMillis() = (bestiaryNotifTime * 1000).toInt()
 
     @Property(
         type = PropertyType.SWITCH,
