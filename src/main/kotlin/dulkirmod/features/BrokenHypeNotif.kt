@@ -58,7 +58,7 @@ fun brokenHypeNotif() {
     }
 
     // If this section of the code is reached, then we have the same item, and we can check for updated stats
-    if (oldKill != kill && oldChampionXp == championXp && TabListUtils.area != "Private Island") {
+    if (oldKill != kill && oldChampionXp == championXp && Utils.area != "Private Island") {
         mc.thePlayer.playSound("random.anvil_land", 1f * Config.bestiaryNotifVol, 0f)
         val color = Utils.getColorString(Config.bestiaryNotifColor)
         TitleUtils.drawStringForTime("${color}Hype Broken", Config.notifTimeMillis())

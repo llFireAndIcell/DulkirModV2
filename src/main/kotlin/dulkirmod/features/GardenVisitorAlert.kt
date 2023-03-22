@@ -14,7 +14,7 @@ object GardenVisitorAlert {
         if (!Config.notifyMaxVisitors) return
         if (!Utils.isInSkyblock()) return
 
-        if (TabListUtils.area != "Garden") {
+        if (Utils.area != "Garden") {
             hasSentAlert = false
         }
 
