@@ -2,6 +2,7 @@ package dulkirmod.features
 
 import dulkirmod.DulkirMod.Companion.mc
 import dulkirmod.config.Config
+import dulkirmod.config.DulkirConfig
 import dulkirmod.utils.ScoreBoardUtils
 import dulkirmod.utils.TitleUtils
 import dulkirmod.utils.Utils
@@ -16,20 +17,20 @@ fun alarmClock() {
     val lines = ScoreBoardUtils.getLines()
     for (l in lines) {
         // ZOMBIE VILLAGER
-        if (Config.notifyZombieVillager && l.contains("8:00pm") && (currTime - lastUpdate) > 15000) {
+        if (DulkirConfig.notifyZombieVillager && l.contains("8:00pm") && (currTime - lastUpdate) > 15000) {
             lastUpdate = currTime
-            val color = Utils.getColorString(Config.bestiaryNotifColor)
-            DulkirMod.titleUtils.drawStringForTime("${color}Zombie Villager", Config.notifTimeMillis())
-            if (Config.bestiaryAlertSounds)
-                mc.thePlayer.playSound("mob.villager.yes", 1f * Config.bestiaryNotifVol, 0f)
+            val color = Utils.getColorString(DulkirConfig.bestiaryNotifColor)
+            TitleUtils.drawStringForTime("${color}Zombie Villager", Config.notifTimeMillis())
+            if (DulkirConfig.bestiaryAlertSounds)
+                mc.thePlayer.playSound("mob.villager.yes", 1f * DulkirConfig.bestiaryNotifVol, 0f)
         }
         // GHASTS
-        else if (Config.notifyGhast && l.contains("9:00pm") && (currTime - lastUpdate) > 15000) {
+        else if (DulkirConfig.notifyGhast && l.contains("9:00pm") && (currTime - lastUpdate) > 15000) {
             lastUpdate = currTime
-            val color = Utils.getColorString(Config.bestiaryNotifColor)
-            DulkirMod.titleUtils.drawStringForTime("${color}Ghast", Config.notifTimeMillis())
-            if (Config.bestiaryAlertSounds)
-                mc.thePlayer.playSound("mob.ghast.scream", 1f * Config.bestiaryNotifVol, 1f)
+            val color = Utils.getColorString(DulkirConfig.bestiaryNotifColor)
+            TitleUtils.drawStringForTime("${color}Ghast", Config.notifTimeMillis())
+            if (DulkirConfig.bestiaryAlertSounds)
+                mc.thePlayer.playSound("mob.ghast.scream", 1f * DulkirConfig.bestiaryNotifVol, 1f)
         }
 
     }

@@ -2,6 +2,7 @@ package dulkirmod.features
 
 import dulkirmod.DulkirMod.Companion.mc
 import dulkirmod.config.Config
+import dulkirmod.config.DulkirConfig
 import dulkirmod.utils.TabListUtils
 import dulkirmod.utils.TitleUtils
 import dulkirmod.utils.Utils
@@ -13,7 +14,7 @@ var oldChampionXp = -1.0
 var oldID = ""
 
 fun brokenHypeNotif() {
-    if (!Config.notifyHype) return
+    if (!DulkirConfig.notifyHype) return
 
     var kill = -1
     var championXp = -1.0
@@ -26,7 +27,7 @@ fun brokenHypeNotif() {
     // get info about held item
     if (stack.hasTagCompound()) {
         val tag: NBTTagCompound = stack.tagCompound
-        if (tag.hasKey("ExtraAttributes", 10)) {
+        if (tag.hasKey("ExtraAttributes", 10) && tag.hasKey("display", 10)) {
             val ea: NBTTagCompound = tag.getCompoundTag("ExtraAttributes")
             if (ea.hasKey("id", 8)) {
                 id = ea.getString("id")
@@ -39,9 +40,8 @@ fun brokenHypeNotif() {
             }
         }
     }
-
-    // check if same item as previous run
-    if (id == "") {
+    // check if a wither blade, then check if same id
+    if (!(id matches "(HYPERION|ASTRAEA|SCYLLA|VALKYRIE)".toRegex())) {
         return
     } else if (id != oldID) {
         // Check if this is a valid item for testing whether bestiary is broken.
@@ -58,9 +58,9 @@ fun brokenHypeNotif() {
     }
 
     // If this section of the code is reached, then we have the same item, and we can check for updated stats
-    if (oldKill != kill && oldChampionXp == championXp && Utils.area != "Private Island") {
-        mc.thePlayer.playSound("random.anvil_land", 1f * Config.bestiaryNotifVol, 0f)
-        val color = Utils.getColorString(Config.bestiaryNotifColor)
+    if (oldKill != kill && oldChampionXp == championXp && TabListUtils.area != "Private Island") {
+        mc.thePlayer.playSound("random.anvil_land", 1f * DulkirConfig.bestiaryNotifVol, 0f)
+        val color = Utils.getColorString(DulkirConfig.bestiaryNotifColor)
         TitleUtils.drawStringForTime("${color}Hype Broken", Config.notifTimeMillis())
     }
     // update item regardless of whether it is bugged or not

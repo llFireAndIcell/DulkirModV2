@@ -1,7 +1,7 @@
 package dulkirmod.features
 
 import dulkirmod.DulkirMod.Companion.mc
-import dulkirmod.config.Config
+import dulkirmod.config.DulkirConfig
 import dulkirmod.utils.ScoreBoardUtils
 import dulkirmod.utils.WorldRenderUtils
 import net.minecraft.util.BlockPos
@@ -30,7 +30,7 @@ object DragonTimer {
 	 * Called from within the MixinWorld Class
 	 */
 	fun handleNewParticle(pID: Int, x: Double, y: Double, z: Double) {
-		if (!Config.dragonTimer) return
+		if (!DulkirConfig.dragonTimer) return
 		if (!ScoreBoardUtils.isInM7) return
 
 		if (pID != 26) return
@@ -46,7 +46,7 @@ object DragonTimer {
 	fun onRenderWorld(event: RenderWorldLastEvent) {
 		renderDragonBoxes()
 
-		if (!Config.dragonTimer) return
+		if (!DulkirConfig.dragonTimer) return
 		if (!ScoreBoardUtils.isInM7) return
 
 		val curTime = System.currentTimeMillis()
@@ -116,19 +116,24 @@ object DragonTimer {
 	}
 
 	private fun renderDragonBoxes() {
-		if (!Config.dragonKillBox) return
+		if (!DulkirConfig.dragonKillBox) return
 		if (!ScoreBoardUtils.isInM7) return
 		if (mc.thePlayer.positionVector.yCoord > 45) return
 		// Blue
-		WorldRenderUtils.drawCustomBox(71.5, 25.0, 16.0, 10.0, 82.5, 25.0, Color(0, 170, 170, 255), 3f, phase = false)
+		if (!isDead("blue"))
+			WorldRenderUtils.drawCustomBox(71.5, 25.0, 16.0, 10.0, 82.5, 25.0, Color(0, 170, 170, 255), 3f, phase = false)
 		// Purple
-		WorldRenderUtils.drawCustomBox(45.5, 23.0, 13.0, 10.0, 113.5, 23.0, Color(170, 0, 170, 255), 3f, phase = false)
+		if (!isDead("purple"))
+			WorldRenderUtils.drawCustomBox(45.5, 23.0, 13.0, 10.0, 113.5, 23.0, Color(170, 0, 170, 255), 3f, phase = false)
 		// Green
-		WorldRenderUtils.drawCustomBox(7.0, 30.0, 8.0, 20.0, 80.0, 30.0, Color(85, 255, 85, 255), 3f, phase = false)
+		if (!isDead("green"))
+			WorldRenderUtils.drawCustomBox(7.0, 30.0, 8.0, 20.0, 80.0, 30.0, Color(85, 255, 85, 255), 3f, phase = false)
 		// Red
-		WorldRenderUtils.drawCustomBox(14.5, 25.0, 13.0, 15.0, 45.5, 25.0, Color(255, 85, 85, 255), 3f, phase = false)
+		if (!isDead("red"))
+			WorldRenderUtils.drawCustomBox(14.5, 25.0, 13.0, 15.0, 45.5, 25.0, Color(255, 85, 85, 255), 3f, phase = false)
 		// Orange
-		WorldRenderUtils.drawCustomBox(72.0, 30.0, 8.0, 20.0, 47.0, 30.0, Color(255, 170, 0, 255), 3f, phase = false)
+		if (!isDead("orange"))
+			WorldRenderUtils.drawCustomBox(72.0, 30.0, 8.0, 20.0, 47.0, 29.0, Color(255, 170, 0, 255), 3f, phase = false)
 	}
 
 	@SubscribeEvent
