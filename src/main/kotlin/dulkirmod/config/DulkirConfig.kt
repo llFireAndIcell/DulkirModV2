@@ -488,15 +488,14 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
     )
     var bestiaryNotifSize = .7f
 
-    @Property(
-        type = PropertyType.DECIMAL_SLIDER,
+    @Slider(
         name = "Time",
         description = "Time, in seconds, for notifications to display",
         category = "Bestiary",
         subcategory = "Notifications",
-        minF = 0.1f,
-        maxF = 5f,
-        decimalPlaces = 1
+        min = 0.1f,
+        max = 5f,
+        step = 0
     )
     var bestiaryNotifTime = 2f
     fun notifTimeMillis() = (bestiaryNotifTime * 1000).toInt()

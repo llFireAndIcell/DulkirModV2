@@ -14,7 +14,7 @@ object GardenVisitorAlert {
         if (!DulkirConfig.notifyMaxVisitors) return
         if (!Utils.isInSkyblock()) return
 
-        if (Utils.area != "Garden") {
+        if (TabListUtils.area != "Garden") {
             hasSentAlert = false
         }
 

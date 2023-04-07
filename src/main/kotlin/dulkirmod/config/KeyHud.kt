@@ -10,7 +10,6 @@ class KeyHud : TextHud(true) {
             lines?.add(0, "Wither Key Display")
             return
         }
-        if (DungeonKeyDisplay.hasKey)
-            lines?.add(0, "Key Obtained")
+        if (DungeonKeyDisplay.hasKey) lines?.add(0, "Key Obtained")
     }
 }

@@ -11,7 +11,7 @@ object MatchoAlert {
     var hasSentAlert = false
 
     fun alert() {
-        if (!Config.notifyMatcho) return
+        if (!DulkirConfig.notifyMatcho) return
         if (!Utils.isInSkyblock()) return
 
         if (TabListUtils.area != "Crimson Isle") {
@@ -20,7 +20,7 @@ object MatchoAlert {
 
         if (TabListUtils.explosivity && !hasSentAlert) {
             val color = Utils.getColorString(DulkirConfig.bestiaryNotifColor)
-            TitleUtils.drawStringForTime("${color}Matcho", Config.notifTimeMillis())
+            TitleUtils.drawStringForTime("${color}Matcho", DulkirConfig.notifTimeMillis())
             if (DulkirConfig.bestiaryAlertSounds)
                 DulkirMod.mc.thePlayer.playSound("mob.villager.yes", 1f * DulkirConfig.bestiaryNotifVol, 0f)
             hasSentAlert = true

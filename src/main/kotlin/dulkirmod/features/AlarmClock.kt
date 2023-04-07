@@ -1,7 +1,6 @@
 package dulkirmod.features
 
 import dulkirmod.DulkirMod.Companion.mc
-import dulkirmod.config.Config
 import dulkirmod.config.DulkirConfig
 import dulkirmod.utils.ScoreBoardUtils
 import dulkirmod.utils.TitleUtils
@@ -20,7 +19,7 @@ fun alarmClock() {
         if (DulkirConfig.notifyZombieVillager && l.contains("8:00pm") && (currTime - lastUpdate) > 15000) {
             lastUpdate = currTime
             val color = Utils.getColorString(DulkirConfig.bestiaryNotifColor)
-            TitleUtils.drawStringForTime("${color}Zombie Villager", Config.notifTimeMillis())
+            TitleUtils.drawStringForTime("${color}Zombie Villager", DulkirConfig.notifTimeMillis())
             if (DulkirConfig.bestiaryAlertSounds)
                 mc.thePlayer.playSound("mob.villager.yes", 1f * DulkirConfig.bestiaryNotifVol, 0f)
         }
@@ -28,7 +27,7 @@ fun alarmClock() {
         else if (DulkirConfig.notifyGhast && l.contains("9:00pm") && (currTime - lastUpdate) > 15000) {
             lastUpdate = currTime
             val color = Utils.getColorString(DulkirConfig.bestiaryNotifColor)
-            TitleUtils.drawStringForTime("${color}Ghast", Config.notifTimeMillis())
+            TitleUtils.drawStringForTime("${color}Ghast", DulkirConfig.notifTimeMillis())
             if (DulkirConfig.bestiaryAlertSounds)
                 mc.thePlayer.playSound("mob.ghast.scream", 1f * DulkirConfig.bestiaryNotifVol, 1f)
         }

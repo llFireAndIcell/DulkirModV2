@@ -1,5 +1,6 @@
 package dulkirmod
 
+import cc.polyfrost.oneconfig.libs.universal.ChatColor
 import dulkirmod.command.*
 import dulkirmod.config.DulkirConfig
 import dulkirmod.config.KeyHud
@@ -10,7 +11,6 @@ import dulkirmod.utils.ContainerNameUtil
 import dulkirmod.utils.TabListUtils
 import dulkirmod.utils.TextUtils
 import dulkirmod.utils.TitleUtils
-import gg.essential.universal.ChatColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -121,14 +121,14 @@ class DulkirMod {
             TextUtils.toggledMessage("No Selfie Camera", DulkirConfig.noReverse3rdPerson)
         }
         if (keyBinds[2].isPressed) {
-            FarmingControlSchemeCommand.toggleControls();
+            FarmingControlSchemeCommand.toggleControls()
         }
     }
 
     companion object {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
-        const val MOD_VERSION = "1.1.9"
+        const val MOD_VERSION = "1.2.0"
         val CHAT_PREFIX = "${ChatColor.DARK_AQUA}${ChatColor.BOLD}DulkirMod ${ChatColor.DARK_GRAY}»${ChatColor.RESET}"
 
         val mc: Minecraft = Minecraft.getMinecraft()
@@ -138,7 +138,7 @@ class DulkirMod {
         val scope = CoroutineScope(EmptyCoroutineContext)
 
         val keyBinds = arrayOf(
-            KeyBinding("Open Settings", Keyboard.KEY_RSHIFT, "Dulkir Mod"),
+            KeyBinding("Open Settings", Keyboard.KEY_NONE, "Dulkir Mod"),
             KeyBinding("Toggle Selfie Setting", Keyboard.KEY_NONE, "Dulkir Mod"),
             KeyBinding("Toggle Farming Controls", Keyboard.KEY_NONE, "Dulkir Mod")
         )
