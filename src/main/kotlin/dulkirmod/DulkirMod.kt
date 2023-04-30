@@ -3,7 +3,6 @@ package dulkirmod
 import cc.polyfrost.oneconfig.libs.universal.ChatColor
 import dulkirmod.command.*
 import dulkirmod.config.DulkirConfig
-import dulkirmod.config.KeyHud
 import dulkirmod.events.ChatEvent
 import dulkirmod.features.*
 import dulkirmod.features.chat.AbiphoneDND
@@ -79,8 +78,9 @@ class DulkirMod {
         mcBus.register(KeeperWaypoints)
         mcBus.register(ScalableTooltips)
         mcBus.register(GardenVisitorAlert)
-        mcBus.register(DragonTimer)
+        mcBus.register(DragonFeatures)
         mcBus.register(HideHealerFairy)
+        mcBus.register(SecretSounds)
 
         keyBinds.forEach(ClientRegistry::registerKeyBinding)
     }
@@ -109,6 +109,7 @@ class DulkirMod {
             // Now I don't have to fetch the entries for multiple things, this just updates and caches
             // the data structure on 1s cooldown
             TabListUtils.parseTabEntries()
+            DragonFeatures.updateDragonDead()
             lastLongUpdate = currTime
         }
     }
@@ -128,12 +129,11 @@ class DulkirMod {
     companion object {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
-        const val MOD_VERSION = "1.2.0"
+        const val MOD_VERSION = "1.2.1"
         val CHAT_PREFIX = "${ChatColor.DARK_AQUA}${ChatColor.BOLD}DulkirMod ${ChatColor.DARK_GRAY}»${ChatColor.RESET}"
 
         val mc: Minecraft = Minecraft.getMinecraft()
         var config = DulkirConfig
-        var hud = KeyHud()
         var display: GuiScreen? = null
         val scope = CoroutineScope(EmptyCoroutineContext)
 

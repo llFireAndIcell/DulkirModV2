@@ -13,8 +13,11 @@ val NetworkPlayerInfo.text: String
 object TabListUtils {
     var area: String = ""
     var explosivity: Boolean = false
-    var isInDungeons: Boolean = false
     var maxVisitors: Boolean = false
+    var emptyComposter: Boolean = false
+    var gardenMilestone: String = ""
+    var timeTillNextVisitor: String = ""
+    var numVisitors: Int = 0
 
     private val playerInfoOrdering = object : Ordering<NetworkPlayerInfo>() {
         override fun compare(o1: NetworkPlayerInfo?, o2: NetworkPlayerInfo?): Int {
@@ -49,39 +52,49 @@ object TabListUtils {
     fun parseTabEntries() {
         // exploFlag is just telling the loop that the next line is the relevant tab entry
         var exploFlag = false
+        var numVisitorsFlag = false
         // dungeonFlag keeps track of whether we've found the in-dungeons state.
-        var dungeonFlag = false
         val scoreboardList: List<String> = fetchTabEntries().mapNotNull {
             it.displayName?.unformattedText
         }
 
+
         for (line in scoreboardList) {
-            if (line.startsWith("Area: "))
-                area = line.substring(6)
-            else if (line == "Volcano Explosivity:") {
-                exploFlag = true
+            when {
+                line.startsWith("Area: ") -> area = line.substring(6)
+                line == "Volcano Explosivity:" -> exploFlag = true
+                exploFlag -> {
+                    exploFlag = false
+                    if (line != " INACTIVE") {
+                        explosivity = true
+                    }
+                }
+                line == "       Dungeon Stats" -> {
+                    area = "Dungeon"
+                }
+                line.startsWith(" Time Left:") -> {
+                    emptyComposter = (line.substring(12) == "INACTIVE")
+                }
+                line.startsWith(" Milestone") -> gardenMilestone = line.substring(1)
+                line.startsWith(" Next Visitor:") -> {
+                    timeTillNextVisitor = line.substring(15)
+                    maxVisitors = (timeTillNextVisitor == "Queue Full!")
+                }
+                line.startsWith("Visitors:") -> {
+                    numVisitors = line.substring(11, 12).toInt() // TODO: FIX WHEN THEY ADD THE TENTH VISITOR
+                    numVisitorsFlag = true
+                }
             }
-            else if (exploFlag) {
-                explosivity = line != " INACTIVE"
-                exploFlag = false
-            }
-            else if (line == "       Dungeon Stats") {
-                isInDungeons = true
-                dungeonFlag = true
-            }
-            // Here is some scuffed code that basically makes sure maxVisitors is assigned appropriately.
-            // It's awful and I do not care to fix it lol.
-            else if (line == " Next Visitor: Queue Full!")
-                maxVisitors = true
-            else if (line.startsWith(" Next Visitor:"))
-                maxVisitors = false
         }
 
-        if (area != "Crimson Isle")
+        if (area != "Crimson Isle") {
             explosivity = false
-        if (area != "Garden")
+        }
+        if (area != "Garden") {
             maxVisitors = false
-        if (!dungeonFlag)
-            isInDungeons = false
+        }
+        if (!numVisitorsFlag) {
+            numVisitors = 0
+        }
     }
 }

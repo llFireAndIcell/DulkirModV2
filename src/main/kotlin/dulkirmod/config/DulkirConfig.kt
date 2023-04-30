@@ -5,7 +5,11 @@ import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
 import dulkirmod.DulkirMod
+import dulkirmod.overlays.GardenInfoHud
+import dulkirmod.overlays.KeyHud
+import dulkirmod.overlays.YawDisplayHud
 import dulkirmod.utils.Utils
+import net.minecraft.client.audio.SoundCategory
 
 
 object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-config.json") {
@@ -144,7 +148,7 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         category = "Dungeons",
         subcategory = "Dungeons"
     )
-    var dragonTimer = true
+    var dragonTimer = false
 
     @Switch(
         name = "Better M7 Dragon Killbox",
@@ -152,7 +156,31 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         category = "Dungeons",
         subcategory = "Dungeons"
     )
-    var dragonKillBox = true
+    var dragonKillBox = false
+
+    @Switch(
+        name = "Gyro Waypoints",
+        description = "Only renders in p5",
+        category = "Dungeons",
+        subcategory = "Dungeons"
+    )
+    var gyroWaypoints = false
+
+    @Switch(
+        name = "Decoy Waypoints",
+        description = "Only renders in p5",
+        category = "Dungeons",
+        subcategory = "Dungeons"
+    )
+    var decoyWaypoints = false
+
+    @Switch(
+        name = "LB Waypoints",
+        description = "Only renders in p5",
+        category = "Dungeons",
+        subcategory = "Dungeons"
+    )
+    var lbWaypoints = false
 
     @Switch(
         name = "Hide Extra Nametags",
@@ -175,7 +203,7 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         name = "Size",
         description = "Scales the size of your currently held item. Default: 0",
         category = "Animations",
-        subcategory = "Dungeons",
+        subcategory = "Animations",
         min = -1.5f,
         max = 1.5f,
         step = 0
@@ -358,6 +386,46 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         secure = false
     )
     var highlightLeapName: String = "Dilkur"
+
+    @Switch(
+        name = "Play sound when clicking secrets in dungeons",
+        description = "Will play on levers, chests and essence",
+        category = "Dungeons",
+        subcategory = "Dungeons"
+    )
+    var secretClickSounds = false
+
+    @Slider(
+        name = "Secret Click Volume",
+        description = "Volume of click sound",
+        category = "Dungeons",
+        subcategory = "Dungeons",
+        min = 0f,
+        max = 1f,
+        step = 0
+    )
+    var secretSoundVolume = .7f
+
+    @Button(
+        name = "Demo Volume Selection",
+        description = "Plays the Random Break sound as Reference, Might add individual sliders later but this seems like enough",
+        category = "Dungeons",
+        subcategory = "Dungeons",
+        text = "Test"
+    )
+    fun demoSecretVolume() {
+        val prevMaster = DulkirMod.mc.gameSettings.getSoundLevel(SoundCategory.MASTER)
+        DulkirMod.mc.gameSettings.setSoundLevel(SoundCategory.MASTER, 1f)
+        val prevNote = DulkirMod.mc.gameSettings.getSoundLevel(SoundCategory.MASTER)
+        DulkirMod.mc.gameSettings.setSoundLevel(SoundCategory.RECORDS, 1f)
+        DulkirMod.mc.thePlayer.playSound(
+            "note.pling",
+            1f * DulkirConfig.secretSoundVolume,
+            1f
+        )
+        DulkirMod.mc.gameSettings.setSoundLevel(SoundCategory.MASTER, prevMaster)
+        DulkirMod.mc.gameSettings.setSoundLevel(SoundCategory.RECORDS, prevNote)
+    }
 
     @Switch(
         name = "Remove Selfie Camera",
@@ -612,6 +680,62 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
     )
     var witherKeyDisplayHUD: KeyHud = KeyHud()
 
+    @HUD(
+        name = "Pitch/Yaw Display",
+        category = "HUD",
+        subcategory = "Farming"
+    )
+    var YawDisplayHud: YawDisplayHud = YawDisplayHud()
+
+    @Switch(
+        name = "Display Pitch as well",
+        description = "useful for some slime launcher stuff",
+        category = "HUD",
+        subcategory = "Farming"
+    )
+    var showPitch = false
+
+    @Switch(
+        name = "3 Decimals on Yaw",
+        description = "are u ok bro",
+        category = "HUD",
+        subcategory = "Farming"
+    )
+    var yaw3Decimals = false
+
+    @HUD(
+        name = "Garden Info Display",
+        category = "HUD",
+        subcategory = "Garden"
+    )
+    var GardenInfoHud: GardenInfoHud = GardenInfoHud()
+
+    @Switch(
+        name = "Empty Composter Notif",
+        description = "Will display in HUD instead of giga-alert",
+        category = "HUD",
+        subcategory = "Garden"
+    )
+    var composterAlert = true
+
+    @Switch(
+        name = "Farming Milestone Display",
+        description = "Increasing number go brr",
+        category = "HUD",
+        subcategory = "Garden"
+    )
+    var gardenMilestoneDisplay = true
+
+    @Switch(
+        name = "Visitor Info",
+        description = "Show number present and time until next",
+        category = "HUD",
+        subcategory = "Garden"
+    )
+    var visitorInfo = true
+
+
+
     fun init() {
         initialize()
         addDependency("customMessage", "throttleNotifier")
@@ -623,6 +747,7 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         addDependency("hurtCamIntensity", "hurtCamSlider")
         addDependency("tooltipSize", "scaledTooltips")
         addDependency("persistentAlert", "notifyMaxVisitors")
-
+        addDependency("secretSoundVolume", "secretClickSounds")
+        addDependency("demoSecretVolume", "secretClickSounds")
     }
 }
