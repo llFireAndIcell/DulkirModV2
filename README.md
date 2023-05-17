@@ -53,3 +53,8 @@ Settings Command: /dulkir
 - Arachne Boss Spawn countdown
 - Matcho Alerts!
 - Arachne Keeper features
+
+### V2 Changes
+- Move bestiary notification higher on the screen, to not cover your crosshair
+- Add a setting to change bestiary notification display time
+- Changed the mod prefix to look like the skytils one bc I like it man idk
