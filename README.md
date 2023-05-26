@@ -56,5 +56,9 @@ Settings Command: /dulkir
 
 ### V2 Changes
 - Move bestiary notification higher on the screen, to not cover your crosshair
-- Add a setting to change bestiary notification display time
+- Added setting to change bestiary notification display time
 - Changed the mod prefix to look like the skytils one bc I like it man idk
+- Added /dulk and /dulkir as aliases for /dulkirmod
+- Made the config keybind unbound by default
+- Decreased line padding of multi-line text huds
+- Added /dynamickey as an alias for /dk
