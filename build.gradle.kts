@@ -7,11 +7,11 @@ plugins {
     id("gg.essential.loom") version "0.10.0.+"
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.8.20"
 }
 
 group = "com.example.archloomtemplate"
-version = "1.2.1"
+version = "1.2.2"
 
 // Toolchains:
 java {
@@ -75,7 +75,7 @@ dependencies {
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
         isTransitive = false
     }
-    annotationProcessor("org.spongepowered:mixin:0.8.4-SNAPSHOT")
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT")
 
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.0")

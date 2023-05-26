@@ -23,6 +23,14 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
     var crimsonIslesMemoryLeakPatch = true
 
     @Switch(
+        name = "Remove Useless Armor Stands",
+        description = "Another hypixel issue, should be a significant fps boost in relevant scenarios.",
+        category = "General",
+        subcategory = "General"
+    )
+    var blankStandRemoval = true
+
+    @Switch(
         name = "Hide Enchant Rune Particles",
         description = "ugly go bye-bye",
         category = "General",
@@ -45,14 +53,6 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         subcategory = "General"
     )
     var abiCallerID = false
-
-    @Switch(
-        name = "Hurt Cam Slider",
-        description = "more or less ouchie",
-        category = "General",
-        subcategory = "General"
-    )
-    var hurtCamSlider = false
 
     @Slider(
         name = "Hurt Cam Intensity",
@@ -83,6 +83,22 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         step = 0
     )
     var tooltipSize = 1f
+
+    @Switch(
+        name = "Highlight Blaze slayer Minibosses",
+        description = "HITBOXES!",
+        category = "General",
+        subcategory = "Nether"
+    )
+    var minibossHitbox = false
+
+    @Switch(
+        name = "Blaze Slayer Attunement Display",
+        description = "Shows a hit-box to indicate what dagger you should use",
+        category = "General",
+        subcategory = "Nether"
+    )
+    var attunementDisplay = false
 
     @Switch(
         name = "Hide Healer fairy",
@@ -123,6 +139,15 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         subcategory = "Random Beta Features"
     )
     var cancelArmorGlint = false
+
+    @Text(
+        name = "Dynamic Key Command",
+        description = "'/dk help' for more info",
+        category = "Random Beta Features",
+        subcategory = "Random Beta Features",
+        secure = false
+    )
+    var dynamicCommandString = ""
 
     @Text(
         name = "Throttle Notifier String",
@@ -681,7 +706,7 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
     var witherKeyDisplayHUD: KeyHud = KeyHud()
 
     @HUD(
-        name = "Pitch/Yaw Display",
+        name = "Pitch/Yaw Display in Garden",
         category = "HUD",
         subcategory = "Farming"
     )
@@ -702,6 +727,14 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         subcategory = "Farming"
     )
     var yaw3Decimals = false
+
+    @Switch(
+        name = "Display outside garden",
+        description = "Useful for something!",
+        category = "HUD",
+        subcategory = "Farming"
+    )
+    var showYawEverywhere = false
 
     @HUD(
         name = "Garden Info Display",
@@ -734,6 +767,21 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
     )
     var visitorInfo = true
 
+    @Switch(
+        name = "Steak Display",
+        description = "Show a hitbox around a mob when it can be 1 shot with Steak",
+        category = "Rift",
+        subcategory = "Vamp Slayer"
+    )
+    var steakDisplay = false
+
+    @Switch(
+        name = "Ichor Highlight",
+        description = "Shows a hitbox around current ichors",
+        category = "Rift",
+        subcategory = "Vamp Slayer"
+    )
+    var ichorHighlight = false
 
 
     fun init() {

@@ -6,10 +6,10 @@ import dulkirmod.config.DulkirConfig
 import dulkirmod.events.ChatEvent
 import dulkirmod.features.*
 import dulkirmod.features.chat.AbiphoneDND
-import dulkirmod.utils.ContainerNameUtil
-import dulkirmod.utils.TabListUtils
-import dulkirmod.utils.TextUtils
-import dulkirmod.utils.TitleUtils
+import dulkirmod.features.dungeons.*
+import dulkirmod.features.rift.IchorHighlight
+import dulkirmod.features.rift.SteakDisplay
+import dulkirmod.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,23 +40,26 @@ import kotlin.coroutines.EmptyCoroutineContext
 class DulkirMod {
 
     var lastLongUpdate: Long = 0
+    var lastLongerUpdate: Long = 0
 
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         val directory = File(event.modConfigurationDirectory, "dulkirmod")
         directory.mkdirs()
+        val cch = ClientCommandHandler.instance
 
         // REGISTER COMMANDS HERE        // Help Commands
-        ClientCommandHandler.instance.registerCommand(HelpCommand())
+        cch.registerCommand(HelpCommand())
 
         // General
-        ClientCommandHandler.instance.registerCommand(EnchantRuneCommand())
-        ClientCommandHandler.instance.registerCommand(FairyCommand())
-        ClientCommandHandler.instance.registerCommand(SettingsCommand())
-        ClientCommandHandler.instance.registerCommand(JoinDungeonCommand())
-        ClientCommandHandler.instance.registerCommand(LeapNameCommand())
-        ClientCommandHandler.instance.registerCommand(HurtCamCommand())
-        ClientCommandHandler.instance.registerCommand(FarmingControlSchemeCommand())
+        cch.registerCommand(EnchantRuneCommand())
+        cch.registerCommand(FairyCommand())
+        cch.registerCommand(SettingsCommand())
+        cch.registerCommand(JoinDungeonCommand())
+        cch.registerCommand(LeapNameCommand())
+        cch.registerCommand(HurtCamCommand())
+        cch.registerCommand(FarmingControlSchemeCommand())
+        cch.registerCommand(DynamicKeyCommand())
     }
 
     @Mod.EventHandler
@@ -81,6 +84,10 @@ class DulkirMod {
         mcBus.register(DragonFeatures)
         mcBus.register(HideHealerFairy)
         mcBus.register(SecretSounds)
+        mcBus.register(BlazeSlayerFeatures)
+        mcBus.register(WorldRenderUtils)
+        mcBus.register(IchorHighlight)
+        mcBus.register(SteakDisplay)
 
         keyBinds.forEach(ClientRegistry::registerKeyBinding)
     }
@@ -112,6 +119,11 @@ class DulkirMod {
             DragonFeatures.updateDragonDead()
             lastLongUpdate = currTime
         }
+
+        if (currTime - lastLongerUpdate > 5000) { // longer update
+            MemoryLeakFix.clearBlankStands()
+            lastLongerUpdate = currTime
+        }
     }
 
     @SubscribeEvent
@@ -124,12 +136,15 @@ class DulkirMod {
         if (keyBinds[2].isPressed) {
             FarmingControlSchemeCommand.toggleControls()
         }
+        if (keyBinds[3].isPressed) {
+            TextUtils.sendMessage("/${DulkirConfig.dynamicCommandString}")
+        }
     }
 
     companion object {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
-        const val MOD_VERSION = "1.2.1"
+        const val MOD_VERSION = "1.2.2"
         val CHAT_PREFIX = "${ChatColor.DARK_AQUA}${ChatColor.BOLD}DulkirMod ${ChatColor.DARK_GRAY}»${ChatColor.RESET}"
 
         val mc: Minecraft = Minecraft.getMinecraft()
@@ -140,7 +155,8 @@ class DulkirMod {
         val keyBinds = arrayOf(
             KeyBinding("Open Settings", Keyboard.KEY_NONE, "Dulkir Mod"),
             KeyBinding("Toggle Selfie Setting", Keyboard.KEY_NONE, "Dulkir Mod"),
-            KeyBinding("Toggle Farming Controls", Keyboard.KEY_NONE, "Dulkir Mod")
+            KeyBinding("Toggle Farming Controls", Keyboard.KEY_NONE, "Dulkir Mod"),
+            KeyBinding("Dynamic Key", Keyboard.KEY_NONE, "Dulkir Mod")
         )
     }
 

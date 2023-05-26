@@ -1,4 +1,4 @@
-package dulkirmod.features
+package dulkirmod.features.dungeons
 
 import dulkirmod.DulkirMod.Companion.mc
 import dulkirmod.config.DulkirConfig
@@ -83,7 +83,7 @@ object SecretSounds {
 
     fun playSound() {
         if (System.currentTimeMillis() - lastSound > 50) { // don't kill ears
-            val prevNote = mc.gameSettings.getSoundLevel(SoundCategory.MASTER)
+            val prevNote = mc.gameSettings.getSoundLevel(SoundCategory.RECORDS)
             mc.gameSettings.setSoundLevel(SoundCategory.RECORDS, 1f)
             mc.thePlayer.playSound("note.pling", 1f * DulkirConfig.secretSoundVolume, 1f)
             lastSound = System.currentTimeMillis()
