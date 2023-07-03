@@ -85,7 +85,6 @@ class DulkirMod {
         mcBus.register(HideHealerFairy)
         mcBus.register(SecretSounds)
         mcBus.register(BlazeSlayerFeatures)
-        mcBus.register(WorldRenderUtils)
         mcBus.register(IchorHighlight)
         mcBus.register(SteakDisplay)
 
