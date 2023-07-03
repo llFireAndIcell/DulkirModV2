@@ -29,7 +29,7 @@ object WorldRenderUtils {
         depthTest: Boolean = true,
         scale: Float = 1f,
         showDistance: Boolean = false,
-        shadow: Boolean = false,
+        shadow: Boolean = true,
         renderBlackBox: Boolean = true,
     ) {
         if (!depthTest) {
