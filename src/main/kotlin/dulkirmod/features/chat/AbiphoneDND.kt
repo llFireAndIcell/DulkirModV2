@@ -11,16 +11,16 @@ private val abiphoneFormat = "✆ (\\w+) ✆ ".toRegex()
 private var lastRing: Long = 0
 
 object AbiphoneDND {
-	//BLOCK ABIPHONE SOUNDS
-	@SubscribeEvent(receiveCanceled = false, priority = EventPriority.LOW)
-	fun onSound(event: PlaySoundEvent) {
-		if (!DulkirConfig.abiDND) return
-		if (System.currentTimeMillis() - lastRing < 5000) {
-			if (event.name == "note.pling" && event.sound.volume == 0.69f && event.sound.pitch == 1.6666666f) {
-				event.result = null
-			}
-		}
-	}
+    //BLOCK ABIPHONE SOUNDS
+    @SubscribeEvent(receiveCanceled = false, priority = EventPriority.LOW)
+    fun onSound(event: PlaySoundEvent) {
+        if (!DulkirConfig.abiDND) return
+        if (System.currentTimeMillis() - lastRing < 5000) {
+            if (event.name == "note.pling" && event.sound.volume == 0.69f && event.sound.pitch == 1.6666666f) {
+                event.result = null
+            }
+        }
+    }
 
 	fun handle(event: ClientChatReceivedEvent, unformatted: String) {
 		if (!DulkirConfig.abiDND) return

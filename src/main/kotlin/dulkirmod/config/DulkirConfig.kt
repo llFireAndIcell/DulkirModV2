@@ -2,6 +2,7 @@ package dulkirmod.config
 
 import cc.polyfrost.oneconfig.config.Config
 import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
 import dulkirmod.DulkirMod
@@ -16,19 +17,58 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
 
     @Switch(
         name = "Patch Crimson Isle memory leak",
-        description = "This is a temporary fix for the memory leak on crimson isles. It will be removed when Hypixel fixes the issue.",
+        description = "This was a temporary fix for the memory leak on crimson isles. It is now deprecated.",
         category = "General",
         subcategory = "General"
     )
-    var crimsonIslesMemoryLeakPatch = true
+    var crimsonIslesMemoryLeakPatch = false
 
     @Switch(
         name = "Remove Useless Armor Stands",
-        description = "Another hypixel issue, should be a significant fps boost in relevant scenarios.",
+        description = "Another hypixel issue, should be useful for eman/arachne still.",
         category = "General",
         subcategory = "General"
     )
-    var blankStandRemoval = true
+    var blankStandRemoval = false
+
+    @Switch(
+        name = "Double Hook Ding",
+        description = "blame deathstreeks",
+        category = "Random Beta Features",
+        subcategory = "Fishing"
+    )
+    var doubleHookDing = false
+
+    @Switch(
+        name = "Remove Double Hook Message",
+        description = "i wonder what this does",
+        category = "Random Beta Features",
+        subcategory = "Fishing"
+    )
+    var removeHookMessage = false
+
+    @Switch(
+        name = "Box Archer in P5",
+        description = "blame noth",
+        category = "Random Beta Features",
+        subcategory = "Dungeons"
+    )
+    var archerBox = false
+
+    @Switch(
+        name = "Box Archer Anywhere in Dungeons",
+        description = "This will bypass the m7 check and p5 check",
+        category = "Random Beta Features",
+        subcategory = "Dungeons"
+    )
+    var archerBoxEverywhere = false
+
+    @Color(
+        name = "Archer Box color",
+        category = "Random Beta Features",
+        subcategory = "Dungeons"
+    )
+    var archBoxColor = OneColor(0, 255, 255, 255)
 
     @Switch(
         name = "Hide Enchant Rune Particles",
@@ -37,6 +77,22 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         subcategory = "General"
     )
     var hideEnchantRune = false
+
+    @Switch(
+        name = "Reaper Armor Cooldown Display",
+        description = "Will show as item durability",
+        category = "General",
+        subcategory = "General"
+    )
+    var displayReaperCD = false
+
+    @Switch(
+        name = "Wither Impact Cooldown Display",
+        description = "Will show as item durability",
+        category = "General",
+        subcategory = "General"
+    )
+    var displayImpactCD = false
 
     @Switch(
         name = "Abiphone Do-Not-Disturb",
@@ -115,6 +171,14 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         subcategory = "Dungeons"
     )
     var hideHeartParticles = false
+
+    @Switch(
+        name = "Starred Mob Boxes",
+        description = "Self Explanatory, NOT esp",
+        category = "Dungeons",
+        subcategory = "Dungeons"
+    )
+    var starredBoxes = false
 
     @Switch(
         name = "Throttle Notifier",
@@ -783,6 +847,14 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
     )
     var ichorHighlight = false
 
+    @Switch(
+        name = "Inactive Effigy Waypoint",
+        description = "Useful for learning/remembering where the effigies are in relation to the scoreboard position",
+        category = "Rift",
+        subcategory = "Vamp Slayer"
+    )
+    var effigyWaypoint = false
+
 
     fun init() {
         initialize()
@@ -797,5 +869,6 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         addDependency("persistentAlert", "notifyMaxVisitors")
         addDependency("secretSoundVolume", "secretClickSounds")
         addDependency("demoSecretVolume", "secretClickSounds")
+        addDependency("archerBoxEverywhere", "archerBox")
     }
 }

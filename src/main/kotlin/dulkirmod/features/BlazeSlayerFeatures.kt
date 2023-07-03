@@ -13,6 +13,13 @@ object BlazeSlayerFeatures {
 
     private val minibosses = "(Flare Demon)|(Kindleheart Demon)|(Burningsoul Demon)".toRegex()
 
+    private val phaseColors = listOf(
+        "CRYSTAL ♨" to Color(15, 247, 236, 200),
+        "ASHEN ♨" to Color(40, 40, 40, 200),
+        "AURIC ♨" to Color(206, 219, 57, 200),
+        "SPIRIT ♨" to Color(255, 255, 255, 200)
+    )
+
     @SubscribeEvent
     fun onRenderLiving(event: RenderLivingEvent.Post<*>) {
         if (!(DulkirConfig.attunementDisplay || DulkirConfig.minibossHitbox)) return
@@ -21,67 +28,20 @@ object BlazeSlayerFeatures {
         if (DulkirConfig.attunementDisplay) {
             if (event.entity is EntityArmorStand && event.entity.hasCustomName()) {
                 val name = Utils.stripColorCodes(event.entity.customNameTag)
-                val newPos = WorldRenderUtils.fixRenderPos(event.x, event.y, event.z)
-                val x = newPos[0]
-                val y = newPos[1]
-                val z = newPos[2]
-                when {
-                    name.contains("CRYSTAL ♨") -> {
-                        WorldRenderUtils.drawCustomBox(
-                            x - .5,
-                            1.0,
-                            y - 2,
-                            1.5,
-                            z - .5,
-                            1.0,
-                            Color(15, 247, 236, 255),
-                            3f,
-                            phase = false
-                        )
-                    }
-
-                    name.contains("ASHEN ♨") -> {
-                        WorldRenderUtils.drawCustomBox(
-                            x - .5,
-                            1.0,
-                            y - 2,
-                            1.5,
-                            z - .5,
-                            1.0,
-                            Color(0, 0, 0, 255),
-                            3f,
-                            phase = false
-                        )
-                    }
-
-                    name.contains("AURIC ♨") -> {
-                        WorldRenderUtils.drawCustomBox(
-                            x - .5,
-                            1.0,
-                            y - 2,
-                            1.5,
-                            z - .5,
-                            1.0,
-                            Color(206, 219, 57, 255),
-                            3f,
-                            phase = false
-                        )
-                    }
-
-                    name.contains("SPIRIT ♨") -> {
-                        WorldRenderUtils.drawCustomBox(
-                            x - .5,
-                            1.0,
-                            y - 2,
-                            1.5,
-                            z - .5,
-                            1.0,
-                            Color(255, 255, 255, 255),
-                            3f,
-                            phase = false
-                        )
-                    }
-                }
+                val (x, y, z) = WorldRenderUtils.fixRenderPos(event.x, event.y, event.z)
+                val color = phaseColors.firstOrNull { name.contains(it.first) }?.second
+                if (color != null)
+                    WorldRenderUtils.drawCustomBox(
+                        x - 0.5,
+                        1.0,
+                        y - 2,
+                        1.5,
+                        z - 0.5,
+                        1.0,
+                        color,
+                        3f,
+                        phase = false
+                    )
             }
         }
 
@@ -89,18 +49,15 @@ object BlazeSlayerFeatures {
             if (event.entity is EntityArmorStand && event.entity.hasCustomName()) {
                 val name = Utils.stripColorCodes(event.entity.customNameTag)
 
-                val newPos = WorldRenderUtils.fixRenderPos(event.x, event.y, event.z)
-                val x = newPos[0]
-                val y = newPos[1]
-                val z = newPos[2]
+                val (x, y, z) = WorldRenderUtils.fixRenderPos(event.x, event.y, event.z)
 
                 if (name.contains(minibosses)) {
                     WorldRenderUtils.drawCustomBox(
-                        x - .5,
+                        x - 0.5,
                         1.0,
                         y - 1.5,
                         1.5,
-                        z - .5,
+                        z - 0.5,
                         1.0,
                         Color(7, 227, 21, 255),
                         3f,

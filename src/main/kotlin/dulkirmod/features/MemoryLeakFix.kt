@@ -39,9 +39,9 @@ object MemoryLeakFix {
 		val currentEnts = world.loadedEntityList
 		currentEnts.forEach {
 			if (it !is EntityArmorStand) return@forEach
-			if (it.name != "Armor Stand") return@forEach
+			if (it.hasCustomName()) return@forEach
 			if (it.inventory.any{slot -> slot != null}) return@forEach
-			if (it.motionX != 0.toDouble() || it.motionY != 0.toDouble() || it.motionZ != 0.toDouble()) return@forEach
+			if (it.ticksExisted < 1200) return@forEach
 			world.removeEntityFromWorld(it.entityId)
 		}
 	}

@@ -7,12 +7,11 @@ import dulkirmod.events.ChatEvent
 import dulkirmod.features.*
 import dulkirmod.features.chat.AbiphoneDND
 import dulkirmod.features.dungeons.*
+import dulkirmod.features.rift.EffigyWaypoint
 import dulkirmod.features.rift.IchorHighlight
 import dulkirmod.features.rift.SteakDisplay
 import dulkirmod.utils.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.client.settings.KeyBinding
@@ -21,7 +20,6 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
-import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent
@@ -85,15 +83,15 @@ class DulkirMod {
         mcBus.register(HideHealerFairy)
         mcBus.register(SecretSounds)
         mcBus.register(BlazeSlayerFeatures)
+        mcBus.register(WorldRenderUtils)
         mcBus.register(IchorHighlight)
         mcBus.register(SteakDisplay)
+        mcBus.register(ArcherHighlight)
+        mcBus.register(ReaperDisplay)
+        mcBus.register(ImpactDisplay)
+        mcBus.register(EffigyWaypoint)
 
         keyBinds.forEach(ClientRegistry::registerKeyBinding)
-    }
-
-    @Mod.EventHandler
-    fun postInit(event: FMLLoadCompleteEvent) = scope.launch(Dispatchers.IO) {
-
     }
 
     @SubscribeEvent
@@ -116,6 +114,7 @@ class DulkirMod {
             // the data structure on 1s cooldown
             TabListUtils.parseTabEntries()
             DragonFeatures.updateDragonDead()
+            EffigyWaypoint.checkEffigies()
             lastLongUpdate = currTime
         }
 
@@ -143,7 +142,7 @@ class DulkirMod {
     companion object {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
-        const val MOD_VERSION = "1.2.2"
+        const val MOD_VERSION = "1.2.4"
         val CHAT_PREFIX = "${ChatColor.DARK_AQUA}${ChatColor.BOLD}DulkirMod ${ChatColor.DARK_GRAY}»${ChatColor.RESET}"
 
         val mc: Minecraft = Minecraft.getMinecraft()
