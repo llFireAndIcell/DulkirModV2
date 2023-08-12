@@ -2,12 +2,14 @@ package dulkirmod.config
 
 import cc.polyfrost.oneconfig.config.Config
 import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.annotations.Number
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
 import dulkirmod.DulkirMod
 import dulkirmod.overlays.GardenInfoHud
 import dulkirmod.overlays.KeyHud
+import dulkirmod.overlays.SlayerTracker
 import dulkirmod.overlays.YawDisplayHud
 import dulkirmod.utils.Utils
 import net.minecraft.client.audio.SoundCategory
@@ -762,6 +764,14 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
     )
     var cancelReequip = false
 
+    @Switch(
+        name = "Show re-equip animation when changing slots",
+        description = "Will overwrite \"Turn off re-equip animation\" when switching the slot.",
+        category = "Animations",
+        subcategory = "Fixes"
+    )
+    var showReEquipAnimationWhenChangingSlots = true
+
     @HUD(
         name = "Wither Key Display",
         category = "HUD",
@@ -806,6 +816,22 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         subcategory = "Garden"
     )
     var GardenInfoHud: GardenInfoHud = GardenInfoHud()
+
+    @HUD(
+        name = "Slayer Tracker",
+        category = "HUD",
+        subcategory = "Slayer"
+    )
+    var slayerTracker: SlayerTracker = SlayerTracker()
+
+    @Number(
+        name = "Slayer XP per boss",
+        category = "HUD",
+        subcategory = "Slayer",
+        max = 2000f,
+        min = 5f
+    )
+    var slayerXP = 500
 
     @Switch(
         name = "Empty Composter Notif",
@@ -870,5 +896,6 @@ object DulkirConfig : Config(Mod("DulkirMod", ModType.SKYBLOCK), "dulkirmod-conf
         addDependency("secretSoundVolume", "secretClickSounds")
         addDependency("demoSecretVolume", "secretClickSounds")
         addDependency("archerBoxEverywhere", "archerBox")
+        addDependency("showReEquipAnimationWhenChangingSlots", "cancelReequip")
     }
 }

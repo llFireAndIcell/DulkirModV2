@@ -58,6 +58,7 @@ class DulkirMod {
         cch.registerCommand(HurtCamCommand())
         cch.registerCommand(FarmingControlSchemeCommand())
         cch.registerCommand(DynamicKeyCommand())
+        cch.registerCommand(ResetSlayerTracker())
     }
 
     @Mod.EventHandler
@@ -90,6 +91,7 @@ class DulkirMod {
         mcBus.register(ReaperDisplay)
         mcBus.register(ImpactDisplay)
         mcBus.register(EffigyWaypoint)
+        mcBus.register(SlayerTrackerUtil)
 
         keyBinds.forEach(ClientRegistry::registerKeyBinding)
     }
@@ -115,6 +117,7 @@ class DulkirMod {
             TabListUtils.parseTabEntries()
             DragonFeatures.updateDragonDead()
             EffigyWaypoint.checkEffigies()
+            SlayerTrackerUtil.updateSessionTime()
             lastLongUpdate = currTime
         }
 
@@ -142,7 +145,7 @@ class DulkirMod {
     companion object {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
-        const val MOD_VERSION = "1.2.4"
+        const val MOD_VERSION = "1.2.5"
         val CHAT_PREFIX = "${ChatColor.DARK_AQUA}${ChatColor.BOLD}DulkirMod ${ChatColor.DARK_GRAY}»${ChatColor.RESET}"
 
         val mc: Minecraft = Minecraft.getMinecraft()
