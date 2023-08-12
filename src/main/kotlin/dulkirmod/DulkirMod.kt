@@ -1,6 +1,5 @@
 package dulkirmod
 
-import cc.polyfrost.oneconfig.libs.universal.ChatColor
 import dulkirmod.command.*
 import dulkirmod.config.DulkirConfig
 import dulkirmod.events.ChatEvent
@@ -42,56 +41,60 @@ class DulkirMod {
 
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
-        val directory = File(event.modConfigurationDirectory, "dulkirmod")
-        directory.mkdirs()
-        val cch = ClientCommandHandler.instance
+        MOD_DIR = File(event.modConfigurationDirectory, "dulkirmod")
+        MOD_DIR.mkdirs()
 
-        // REGISTER COMMANDS HERE        // Help Commands
-        cch.registerCommand(HelpCommand())
+        with(ClientCommandHandler.instance) {
+            // REGISTER COMMANDS HERE
+            // Help Commands
+            registerCommand(HelpCommand())
 
-        // General
-        cch.registerCommand(EnchantRuneCommand())
-        cch.registerCommand(FairyCommand())
-        cch.registerCommand(SettingsCommand())
-        cch.registerCommand(JoinDungeonCommand())
-        cch.registerCommand(LeapNameCommand())
-        cch.registerCommand(HurtCamCommand())
-        cch.registerCommand(FarmingControlSchemeCommand())
-        cch.registerCommand(DynamicKeyCommand())
-        cch.registerCommand(ResetSlayerTracker())
+            // General
+            registerCommand(EnchantRuneCommand())
+            registerCommand(FairyCommand())
+            registerCommand(SettingsCommand())
+            registerCommand(JoinDungeonCommand())
+            registerCommand(LeapNameCommand())
+            registerCommand(HurtCamCommand())
+            registerCommand(FarmingControlSchemeCommand())
+            registerCommand(DynamicKeyCommand())
+            registerCommand(ResetSlayerTracker())
+        }
     }
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent) {
         config.init()
+
         // REGISTER Classes and such HERE
-        val mcBus = MinecraftForge.EVENT_BUS
-        mcBus.register(this)
-        mcBus.register(MemoryLeakFix)
-        mcBus.register(ChatEvent)
-        mcBus.register(NametagCleaner)
-        mcBus.register(TitleUtils)
-        mcBus.register(ArachneTimer)
-        mcBus.register(MatchoAlert)
-        mcBus.register(Croesus)
-        mcBus.register(ContainerNameUtil)
-        mcBus.register(DungeonLeap)
-        mcBus.register(AbiphoneDND)
-        mcBus.register(KeeperWaypoints)
-        mcBus.register(ScalableTooltips)
-        mcBus.register(GardenVisitorAlert)
-        mcBus.register(DragonFeatures)
-        mcBus.register(HideHealerFairy)
-        mcBus.register(SecretSounds)
-        mcBus.register(BlazeSlayerFeatures)
-        mcBus.register(WorldRenderUtils)
-        mcBus.register(IchorHighlight)
-        mcBus.register(SteakDisplay)
-        mcBus.register(ArcherHighlight)
-        mcBus.register(ReaperDisplay)
-        mcBus.register(ImpactDisplay)
-        mcBus.register(EffigyWaypoint)
-        mcBus.register(SlayerTrackerUtil)
+        with(MinecraftForge.EVENT_BUS) {
+            register(this)
+            register(MemoryLeakFix)
+            register(ChatEvent)
+            register(NametagCleaner)
+            register(TitleUtils)
+            register(ArachneTimer)
+            register(MatchoAlert)
+            register(Croesus)
+            register(ContainerNameUtil)
+            register(DungeonLeap)
+            register(AbiphoneDND)
+            register(KeeperWaypoints)
+            register(ScalableTooltips)
+            register(GardenVisitorAlert)
+            register(DragonFeatures)
+            register(HideHealerFairy)
+            register(SecretSounds)
+            register(BlazeSlayerFeatures)
+            register(WorldRenderUtils)
+            register(IchorHighlight)
+            register(SteakDisplay)
+            register(ArcherHighlight)
+            register(ReaperDisplay)
+            register(ImpactDisplay)
+            register(EffigyWaypoint)
+            register(SlayerTrackerUtil)
+        }
 
         keyBinds.forEach(ClientRegistry::registerKeyBinding)
     }
@@ -134,19 +137,16 @@ class DulkirMod {
             DulkirConfig.noReverse3rdPerson = !DulkirConfig.noReverse3rdPerson
             TextUtils.toggledMessage("No Selfie Camera", DulkirConfig.noReverse3rdPerson)
         }
-        if (keyBinds[2].isPressed) {
-            FarmingControlSchemeCommand.toggleControls()
-        }
-        if (keyBinds[3].isPressed) {
-            TextUtils.sendMessage("/${DulkirConfig.dynamicCommandString}")
-        }
+        if (keyBinds[2].isPressed) FarmingControlSchemeCommand.toggleControls()
+        if (keyBinds[3].isPressed) TextUtils.sendMessage("/${DulkirConfig.dynamicCommandString}")
     }
 
     companion object {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
         const val MOD_VERSION = "1.2.5"
-        val CHAT_PREFIX = "${ChatColor.DARK_AQUA}${ChatColor.BOLD}DulkirMod ${ChatColor.DARK_GRAY}»${ChatColor.RESET}"
+        const val CHAT_PREFIX = "§3§lDulkirMod§r§8 »§r"
+        lateinit var MOD_DIR: File
 
         val mc: Minecraft = Minecraft.getMinecraft()
         var config = DulkirConfig
@@ -160,5 +160,4 @@ class DulkirMod {
             KeyBinding("Dynamic Key", Keyboard.KEY_NONE, "Dulkir Mod")
         )
     }
-
 }

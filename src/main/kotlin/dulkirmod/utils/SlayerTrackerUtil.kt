@@ -20,6 +20,7 @@ object SlayerTrackerUtil {
 
     val slayerQuestStartRegex = "» Slay (\\d{1,3}(?:,\\d{3})*) Combat XP worth of (\\w+).".toRegex()
     val slayerQuestFailRegex = "SLAYER QUEST FAILED!".toRegex()
+
     @SubscribeEvent
     fun onSlayerTypeChange(event: SlayerTypeChangeEvent) {
         // reset relevant tracking features
@@ -36,9 +37,8 @@ object SlayerTrackerUtil {
 
     @SubscribeEvent(receiveCanceled = true, priority = EventPriority.LOW)
     fun onChat(event: ClientChatReceivedEvent) {
-        if (event.type == 2.toByte()) {
-            return
-        }
+        if (event.type == 2.toByte()) return
+
         val unformatted = Utils.stripColorCodes(event.message.unformattedText).trim()
         if (unformatted matches slayerQuestFailRegex) {
             failedRecentSlayerFlag = true
