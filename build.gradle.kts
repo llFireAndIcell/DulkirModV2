@@ -85,6 +85,7 @@ dependencies {
     compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:0.2.0-alpha+") // Should not be included in jar
     // include should be replaced with a configuration that includes this in the jar
     shadowImpl("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+") // Should be included in jar
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 // Configures our shadow/shade configuration, so we can
@@ -139,3 +140,11 @@ tasks.shadowJar {
 tasks.withType<Jar> { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}

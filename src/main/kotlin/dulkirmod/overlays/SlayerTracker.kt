@@ -1,6 +1,5 @@
 package dulkirmod.overlays
 
-import cc.polyfrost.oneconfig.hud.TextHud
 import dulkirmod.utils.SlayerTrackerUtil.averageBossesPerHour
 import dulkirmod.utils.SlayerTrackerUtil.averageSpawnKillTime
 import dulkirmod.utils.SlayerTrackerUtil.averageXPPerHour
@@ -10,7 +9,8 @@ import dulkirmod.utils.SlayerTrackerUtil.sessionXP
 import dulkirmod.utils.Utils
 import java.text.NumberFormat
 
-class SlayerTracker : TextHud(false) {
+class SlayerTracker : CustomTextHud(false) {
+
     override fun getLines(lines: MutableList<String>?, example: Boolean) {
         if (currentSlayerType != "" && !example) {
             val trimmedSlayer = if (currentSlayerType == "Endermen") {
