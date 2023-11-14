@@ -44,22 +44,17 @@ class DulkirMod {
         MOD_DIR = File(event.modConfigurationDirectory, "dulkirmod")
         MOD_DIR.mkdirs()
 
-        with(ClientCommandHandler.instance) {
-            // REGISTER COMMANDS HERE
-            // Help Commands
-            registerCommand(HelpCommand())
-
-            // General
-            registerCommand(EnchantRuneCommand())
-            registerCommand(FairyCommand())
-            registerCommand(SettingsCommand())
-            registerCommand(JoinDungeonCommand())
-            registerCommand(LeapNameCommand())
-            registerCommand(HurtCamCommand())
-            registerCommand(FarmingControlSchemeCommand())
-            registerCommand(DynamicKeyCommand())
-            registerCommand(ResetSlayerTracker())
-        }
+        arrayOf(
+            HelpCommand(),
+                    EnchantRuneCommand(),
+                    FairyCommand(),
+                    SettingsCommand(),
+                    LeapNameCommand(),
+                    HurtCamCommand(),
+                    FarmingControlSchemeCommand(),
+                    DynamicKeyCommand(),
+                    ResetSlayerTracker()
+        ).forEach { ClientCommandHandler.instance.registerCommand(it) }
     }
 
     @Mod.EventHandler
@@ -67,36 +62,36 @@ class DulkirMod {
         config.init()
 
         // REGISTER Classes and such HERE
-        with(MinecraftForge.EVENT_BUS) {
-            register(this)
-            register(MemoryLeakFix)
-            register(ChatEvent)
-            register(NametagCleaner)
-            register(TitleUtils)
-            register(ArachneTimer)
-            register(MatchoAlert)
-            register(Croesus)
-            register(ContainerNameUtil)
-            register(DungeonLeap)
-            register(AbiphoneDND)
-            register(KeeperWaypoints)
-            register(ScalableTooltips)
-            register(GardenVisitorAlert)
-            register(DragonFeatures)
-            register(HideHealerFairy)
-            register(SecretSounds)
-            register(BlazeSlayerFeatures)
-            register(WorldRenderUtils)
-            register(IchorHighlight)
-            register(SteakDisplay)
-            register(ArcherHighlight)
-            register(ReaperDisplay)
-            register(ImpactDisplay)
-            register(EffigyWaypoint)
-            register(SlayerTrackerUtil)
-        }
+        arrayOf(
+            this,
+            MemoryLeakFix,
+            ChatEvent,
+            NametagCleaner,
+            TitleUtils,
+            ArachneTimer,
+            MatchoAlert,
+            Croesus,
+            ContainerNameUtil,
+            DungeonLeap,
+            AbiphoneDND,
+            KeeperWaypoints,
+            ScalableTooltips,
+            GardenVisitorAlert,
+            DragonFeatures,
+            HideHealerFairy,
+            SecretSounds,
+            BlazeSlayerFeatures,
+            WorldRenderUtils,
+            IchorHighlight,
+            SteakDisplay,
+            ArcherHighlight,
+            ReaperDisplay,
+            ImpactDisplay,
+            EffigyWaypoint,
+            SlayerTrackerUtil,
+        ).forEach { MinecraftForge.EVENT_BUS.register(it) }
 
-        keyBinds.forEach(ClientRegistry::registerKeyBinding)
+        keyBinds.forEach { ClientRegistry.registerKeyBinding(it) }
     }
 
     @SubscribeEvent
@@ -144,7 +139,7 @@ class DulkirMod {
     companion object {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
-        const val MOD_VERSION = "1.2.5"
+        const val MOD_VERSION = "1.2.6"
         const val CHAT_PREFIX = "§3§lDulkirMod§r§8 »§r"
         lateinit var MOD_DIR: File
 
