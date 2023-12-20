@@ -5,7 +5,13 @@ import cc.polyfrost.oneconfig.libs.universal.UMatrixStack
 
 abstract class CustomTextHud(enabled: Boolean) : TextHud(enabled) {
 
-    final override fun draw(matrices: UMatrixStack?, x: Float, y: Float, scale: Float, example: Boolean) {
+    final override fun draw(
+        matrices: UMatrixStack?,
+        x: Float,
+        y: Float,
+        scale: Float,
+        example: Boolean
+    ) {
         if (lines.isNullOrEmpty()) return
 
         var textY = y
