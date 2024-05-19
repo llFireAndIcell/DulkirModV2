@@ -21,9 +21,7 @@ object SlayerTrackerUtil {
     val slayerQuestStartRegex = "» Slay (\\d{1,3}(?:,\\d{3})*) Combat XP worth of (\\w+).".toRegex()
     val slayerQuestFailRegex = "SLAYER QUEST FAILED!".toRegex()
 
-    @SubscribeEvent
-    fun onSlayerTypeChange(event: SlayerTypeChangeEvent) {
-        // reset relevant tracking features
+    fun reset() {
         sessionXP = 0
         averageSpawnKillTime = 0f
         averageBossesPerHour = 0f
@@ -33,6 +31,11 @@ object SlayerTrackerUtil {
         sessionTime = 0L
         currentSlayerType = ""
         failedRecentSlayerFlag = false
+    }
+
+    @SubscribeEvent
+    fun onSlayerTypeChange(event: SlayerTypeChangeEvent) {
+        reset()
     }
 
     @SubscribeEvent(receiveCanceled = true, priority = EventPriority.LOW)

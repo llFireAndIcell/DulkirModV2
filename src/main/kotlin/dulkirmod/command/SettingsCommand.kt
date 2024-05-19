@@ -5,6 +5,6 @@ import net.minecraft.command.ICommandSender
 
 class SettingsCommand : ClientCommandBase("dulkir", mutableListOf("dulkirmod", "dulk")) {
     override fun processCommand(sender: ICommandSender?, args: Array<out String>?) {
-        DulkirMod.config.openGui()
+        if (args.isNullOrEmpty()) DulkirMod.config.openGui()
     }
 }
