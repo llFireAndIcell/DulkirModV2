@@ -139,7 +139,7 @@ class DulkirMod {
     companion object {
         const val MOD_ID = "dulkirmod"
         const val MOD_NAME = "Dulkir Mod"
-        const val MOD_VERSION = "1.2.7"
+        const val MOD_VERSION = "1.2.9"
         const val CHAT_PREFIX = "§3§lDulkirMod§r§8 »§r"
         lateinit var MOD_DIR: File
 
